@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<book_list>
+<book>
+  <name>Luster</name>
+  <author>Raven Leilani</author>
+  <year>2020</year>
+  <genre>fiction</genre>
+  <pages>240</pages>
+</book>
+
+<book>
+  <name>Big Friendship</name>
+  <author>Aminatou Sow, Ann Friedman</author>
+  <year>2020</year>
+  <genre>nonfiction</genre>
+  <pages>256</pages>
+</book>
+
+<book> 
+  <name> Disappearing Earth</name>
+  <author>Julia Phillips</author>
+  <year>2019</year>
+  <genre>fiction</genre>
+  <pages>312</pages>
+</book>
+</book_list>
