@@ -1,0 +1,74 @@
+---
+title: "Assignment 7"
+author: "Claire Meyer"
+date: "3/17/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+This document takes files organizing information on 3 books in JSON, HTML, and XML and reads them into R data frames.
+
+## Libraries
+
+```{r libraries, echo=FALSE}
+library(tidyverse)
+library(rvest)
+library(jsonlite)
+library(RCurl)
+library(XML)
+```
+
+## JSON
+
+First, we take the JSON file. I read the file from the Github path, and use *fromJSON* to transform it. It returns a list with a dataframe as the single list item, so for simplicity's sake we can index into the list to grab just the dataframe.
+
+```{r json}
+url <- 'https://raw.githubusercontent.com/cmm6/data607-assignment7/main/books.json'
+
+# Read URL into data frame
+books_json <- fromJSON(txt=url)
+books_json <- books_json[[1]]
+print(books_json)
+```
+
+## XML
+
+Then, we take the XML file. I use *xmlToDataFrame* and *xmlParse* to read this into a data frame.
+
+```{r XML}
+xml_file <- getURL('https://raw.githubusercontent.com/cmm6/data607-assignment7/main/books.xml')
+
+# Read URL into data frame
+books_xml <- xmlToDataFrame(xmlParse(xml_file))
+print(books_xml)
+```
+
+## HTML
+
+Then, we take the HTML file. Again, I read the file from the Github path, and use *html_nodes* to transform it. It also returns a list with a dataframe as the single list item, so again we can index into the list to grab just the dataframe.
+
+```{r html}
+html_file <- getURL('https://raw.githubusercontent.com/cmm6/data607-assignment7/main/books.html')
+
+# https://www.r-bloggers.com/2015/01/using-rvest-to-scrape-an-html-table/
+# Read URL into a data frame
+books_html <- html_file %>%
+  read_html() %>%
+  html_nodes('table') %>%
+  html_table()
+books_html <- books_html[[1]]
+```
+
+## Conclusions
+
+These imported data frames are mostly similar. There are some case differences where I titled differently, e.g. Title vs. title. The JSON data frame also appended a list number to the front of 1, 2, and 3. The data types are also different - year and pages are an integer in both JSON and HTML, but a character in XML. 
+
+```{r compare}
+print(books_html)
+print(books_xml)
+print(books_json)
+```
